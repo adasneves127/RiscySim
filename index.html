@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sketch</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="libraries/p5.min.js"></script>
+    </script>
+  </head>
+
+  <body>
+    
+    <script src="Main.js"></script>
+    <script src="Components.js"></script>
+    <script src="sketch.js"></script>
+    <script>
+    function loadCode(){
+      let code = document.getElementById("CodeInput").value.split(" ");
+      document.getElementById("CodeInput").value = ""
+      console.log(code)
+      let i, j;
+      i = j = 0;
+      code.forEach(elt => {
+        _mem.write(i, j, parseInt(elt, 16))
+            console.log(_mem.read(i, j))
+            j++;
+            if(j == 256){
+                j = 0;
+                i++;
+            }
+            if(i == 256){
+                i = 0;
+            }
+      })
+      console.log("DONE!")
+    }
+    </script>
+    <fieldset style="width: 98%;">
+      <legend>I/O</legend>
+      <div id="MainControlBox" style="width: 100%;">
+        
+          <div id="TextOutput" style="display: inline-block; width: 48%; height: 25rem; overflow: hidden; font-size: 1.4em; background: white; margin-bottom:5px;"></div>
+          <div id="mainOutput" style="display: inline-block; width: 49%; height: 25rem; font-size: 1em; overflow-y: scroll; background-color: white; margin-bottom:5px;"></div> <br>
+        
+        <input type="text" name="TextInput" id="TextInput" style="width: 16rem;">
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Components</legend>
+      <div id="ComponentBox">
+        <table>
+          <thead>
+          <tr>
+            <th>Register Name</th>
+            <th>Register Value</th>
+          </tr>
+        </thead>
+          <tr>
+            <td class="RegLabel">A</td>
+            <td><input type="text" name="A" id="A" class="RegBox" style="width: 16rem;" disabled></td>
+          </tr>
+          <tr>
+            <td class="RegLabel">B</td>
+            <td><input type="text" name="B" id="B" class="RegBox" style="width: 16rem;" disabled></td>
+          </tr>
+          <tr>
+            <td class="RegLabel">C</td>
+            <td><input type="text" name="C" id="C" class="RegBox" style="width: 16rem;" disabled></td>
+          </tr>
+          <tr>
+            <td class="RegLabel">D</td>
+            <td><input type="text" name="D" id="D" class="RegBox" style="width: 16rem;" disabled></td>
+          </tr>
+
+        </table>
+        <button id="RUNSTOP" onclick="runstop()">RUN</button><button id="SINGLESTEP" onclick="draw()">STEP</button><button id="RESET" onclick="reset()">Reset</button>
+      </div>
+    </fieldset>
+    <textarea name="CodeInput" id="CodeInput" cols="30" rows="10"></textarea>
+   <button onclick="loadCode()">LoadCode</button>
+  </body>
+
+  <style>
+    td{
+      padding: 0.5em;
+    }
+    tr, th, td{
+      align-items: center;
+    }
+
+    .RegBox{
+      text-align: center;
+      width: 50px !important;
+    }
+    .RegLabel{
+      text-align: right;
+    }
+
+    th{
+      text-align: center;
+    }
+    table{
+      background-color: lightgray;
+    }
+
+    #RUNSTOP{
+      width: 33%;
+      height: 2em;
+      font-size: 1.4em;
+    }
+
+    #SINGLESTEP{
+      width: 33%;
+      height: 2em;
+      font-size: 1.4em;
+    }
+    #RESET{
+      width: 33%;
+      height: 2em;
+      font-size: 1.4rem;
+    }
+  </style>
+</html>
